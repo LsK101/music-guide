@@ -1,0 +1,18 @@
+.container {
+  border: 1px solid black;
+}
+/*to be customized per container later on*/
+
+.youtube-single-result {
+  border: 1px solid black;
+  clear: left;
+  height: 200px;
+  width: 600px;
+  padding-right: 10px;
+}
+
+.youtube-thumbnail {
+  height: 100%;
+  float: left;
+  margin-right: 10px;
+}
