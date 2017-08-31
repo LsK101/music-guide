@@ -8,6 +8,7 @@ function handleSearchForm() {
     const songQuery = $('.song-string').val();
     const combinedQuery = `${artistQuery} ${songQuery}`;
     clearInputFields();
+    clearResultsContainers();
     unhideContainers();
     getYoutubeData(combinedQuery, displayYoutubeResults);
     getLyricsData(artistQuery, songQuery, displayLyricsResults);
@@ -23,13 +24,16 @@ function clearInputFields() {
   $('song.string').val("");
 }
 
+function clearResultsContainers() {
+  $('.container').empty();
+}
+
 function getLyricsData(artistQuery, songQuery, callback) {
   $.getJSON(`${lyricsAPI}/${artistQuery}/${songQuery}`, callback);
 }
 
 function displayLyricsResults(data) {
   const lyricsData = data.lyrics.replace(/\n/gi,"<br>");
-  console.log(lyricsData);
   $('.lyrics').html(lyricsData);
 }
 
@@ -38,7 +42,7 @@ function getYoutubeData(searchQuery, callback) {
     part: 'snippet',
     q: `artist ${searchQuery}`,
     type: 'video',
-    maxResults: 3,
+    maxResults: 10,
     key: 'AIzaSyAUuE2ybmwEb08dCMkOv6HvW1gJDi8mhbY',
     videoCategoryId: '10'
   };
