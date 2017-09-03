@@ -1,4 +1,5 @@
 const lyricsAPI = "https://api.lyrics.ovh/v1";
+const lyricsSuggestAPI = "https://api.lyrics.ovh/suggest";
 const youtubeAPI = "https://www.googleapis.com/youtube/v3/search";
 
 function handleSearchForm() {
@@ -10,9 +11,26 @@ function handleSearchForm() {
     clearInputFields();
     clearResultsContainers();
     unhideContainers();
+    if (songQuery !== "") {
+      getSongData(combinedQuery, setDataForLyricsFetch);
+    }
     getYoutubeData(combinedQuery, displayYoutubeResults);
-    getLyricsData(artistQuery, songQuery, displayLyricsResults);
   });
+}
+
+function setDataForLyricsFetch(suggestJSON) {
+  const songArtist = suggestJSON.data[0].artist.name;
+  const songTitle = suggestJSON.data[0].title;
+  displaySongInformation(songArtist, songTitle);
+  getLyricsData(songArtist, songTitle, displayLyricsResults);
+}
+
+function displaySongInformation(songArtist, songTitle) {
+  $('.lyrics').append(`<span>${songArtist} - ${songTitle}</span><br><br>`);
+}
+
+function getSongData(combinedQuery, callback) {
+  $.getJSON(`${lyricsSuggestAPI}/${combinedQuery}/`, callback)
 }
 
 function unhideContainers() {
@@ -28,13 +46,13 @@ function clearResultsContainers() {
   $('.container').empty();
 }
 
-function getLyricsData(artistQuery, songQuery, callback) {
-  $.getJSON(`${lyricsAPI}/${artistQuery}/${songQuery}`, callback);
+function getLyricsData(songArtist, songTitle, callback) {
+  $.getJSON(`${lyricsAPI}/${songArtist}/${songTitle}`, callback);
 }
 
 function displayLyricsResults(data) {
   const lyricsData = data.lyrics.replace(/\n/gi,"<br>");
-  $('.lyrics').html(lyricsData);
+  $('.lyrics').append(lyricsData);
 }
 
 function getYoutubeData(searchQuery, callback) {
