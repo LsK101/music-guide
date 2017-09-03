@@ -93,7 +93,7 @@ function getWikipediaSearchData(artistQuery, callback) {
     action: 'query',
     list: 'search',
     format: 'json',
-    srsearch: artistQuery
+    srsearch: `${artistQuery} music artist`
   };
   $.getJSON(wikipediaAPI, query, callback)
 }
