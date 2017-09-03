@@ -16,48 +16,8 @@ function handleSearchForm() {
       getSongData(combinedQuery, setDataForLyricsFetch);
     }
     getYoutubeData(combinedQuery, displayYoutubeResults);
-    getWikipediaData(artistQuery, displayWikipediaResults);
+    getWikipediaSearchData(artistQuery, useWikipediaSearchDataToFindWikiPage);
   });
-}
-
-function getWikipediaData(artistQuery, callback) {
-  const query = {
-    origin: '*',
-    action: 'query',
-    format: 'json',
-    prop: 'extracts|pageimages',
-    indexpageids: 1,
-    redirects: 1,
-    exchars: 1200,
-    exsectionformat: 'plain',
-    piprop: 'name|thumbnail|original',
-    pithumbsize: 250,
-    titles: artistQuery
-  };
-  $.getJSON(wikipediaAPI, query, callback)
-}
-
-function displayWikipediaResults(data) {
-  const pageID = data.query.pageids[0];
-  const wikiTitle = data.query.pages[pageID].title;
-  const wikiInfo = data.query.pages[pageID].extract;
-  $('.wiki').append(`${wikiTitle}<br>`);
-  $('.wiki').append(wikiInfo);
-}
-
-function setDataForLyricsFetch(suggestJSON) {
-  const songArtist = suggestJSON.data[0].artist.name;
-  const songTitle = suggestJSON.data[0].title;
-  displaySongInformation(songArtist, songTitle);
-  getLyricsData(songArtist, songTitle, displayLyricsResults);
-}
-
-function displaySongInformation(songArtist, songTitle) {
-  $('.lyrics').append(`<span>${songArtist} - ${songTitle}</span><br><br>`);
-}
-
-function getSongData(combinedQuery, callback) {
-  $.getJSON(`${lyricsSuggestAPI}/${combinedQuery}/`, callback)
 }
 
 function unhideContainers() {
@@ -71,15 +31,6 @@ function clearInputFields() {
 
 function clearResultsContainers() {
   $('.container').empty();
-}
-
-function getLyricsData(songArtist, songTitle, callback) {
-  $.getJSON(`${lyricsAPI}/${songArtist}/${songTitle}`, callback);
-}
-
-function displayLyricsResults(data) {
-  const lyricsData = data.lyrics.replace(/\n/gi,"<br>");
-  $('.lyrics').append(lyricsData);
 }
 
 function getYoutubeData(searchQuery, callback) {
@@ -109,6 +60,72 @@ function renderYoutubeResults(result) {
         <p>${result.snippet.description}</p>
       </div>
   `;
+}
+
+function getSongData(combinedQuery, callback) {
+  $.getJSON(`${lyricsSuggestAPI}/${combinedQuery}/`, callback)
+}
+
+function setDataForLyricsFetch(suggestJSON) {
+  const songArtist = suggestJSON.data[0].artist.name;
+  const songTitle = suggestJSON.data[0].title;
+  displaySongInformation(songArtist, songTitle);
+  getLyricsData(songArtist, songTitle, displayLyricsResults);
+}
+
+function displaySongInformation(songArtist, songTitle) {
+  $('.lyrics').append(`<span>${songArtist} - ${songTitle}</span><br><br>`);
+}
+
+
+function getLyricsData(songArtist, songTitle, callback) {
+  $.getJSON(`${lyricsAPI}/${songArtist}/${songTitle}`, callback);
+}
+
+function displayLyricsResults(data) {
+  const lyricsData = data.lyrics.replace(/\n/gi,"<br>");
+  $('.lyrics').append(lyricsData);
+}
+
+function getWikipediaSearchData(artistQuery, callback) {
+  query = {
+    origin: '*',
+    action: 'query',
+    list: 'search',
+    format: 'json',
+    srsearch: artistQuery
+  };
+  $.getJSON(wikipediaAPI, query, callback)
+}
+
+function useWikipediaSearchDataToFindWikiPage(wikiJSON) {
+  const songArtist = wikiJSON.query.search[0].title;
+  getWikipediaPageData(songArtist, displayWikipediaResults);
+}
+
+function getWikipediaPageData(songArtist, callback) {
+  const query = {
+    origin: '*',
+    action: 'query',
+    format: 'json',
+    prop: 'extracts|pageimages',
+    indexpageids: 1,
+    redirects: 1,
+    exchars: 1200,
+    exsectionformat: 'plain',
+    piprop: 'name|thumbnail|original',
+    pithumbsize: 250,
+    titles: songArtist
+  };
+  $.getJSON(wikipediaAPI, query, callback)
+}
+
+function displayWikipediaResults(data) {
+  const pageID = data.query.pageids[0];
+  const wikiTitle = data.query.pages[pageID].title;
+  const wikiInfo = data.query.pages[pageID].extract;
+  $('.wiki').append(`${wikiTitle}<br>`);
+  $('.wiki').append(wikiInfo);
 }
 
 handleSearchForm();
