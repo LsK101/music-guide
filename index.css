@@ -1,5 +1,10 @@
+* {
+	box-sizing: border-box;
+}
+
 .container {
   border: 1px solid black;
+  width: 600px;
 }
 /*to be customized per container later on*/
 
