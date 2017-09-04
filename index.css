@@ -11,6 +11,11 @@
   margin-bottom: 10px;
 }
 
+.shows-single-result {
+  border: 1px solid black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 .youtube-thumbnail {
   width: 100%;
 }

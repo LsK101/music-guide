@@ -2,7 +2,18 @@ const lyricsAPI = "https://api.lyrics.ovh/v1";
 const lyricsSuggestAPI = "https://api.lyrics.ovh/suggest";
 const youtubeAPI = "https://www.googleapis.com/youtube/v3/search";
 const wikipediaAPI = "https://en.wikipedia.org/w/api.php";
+const songkickSearchAPI = "http://api.songkick.com/api/3.0/search/artists.json";
+/*  
+calendar: 
+http://api.songkick.com/api/3.0/artists/{artist_id}/calendar.json?apikey={your_api_key}
 
+similar artists: 
+http://api.songkick.com/api/3.0/artists/{artist_id}/similar_artists.json?apikey={your_api_key} 
+
+songkick API key: mtLUgpC0c49wQgiQ 
+*/
+
+/* SEARCH FORM FUNCTIONALITY */
 function handleSearchForm() {
   $('.search-form').submit(event => {
     event.preventDefault();
@@ -10,16 +21,64 @@ function handleSearchForm() {
     const songQuery = $('.song-string').val();
     const combinedQuery = `${artistQuery} ${songQuery}`;
     clearInputFields();
-    clearResultsContainers();
-    unhideContainers();
+    clearAndHideResultsContainers();
     if (songQuery !== "") {
       getSongData(combinedQuery, setDataForLyricsFetch);
     }
     getYoutubeData(combinedQuery, displayYoutubeResults);
     getWikipediaSearchData(artistQuery, useWikipediaSearchDataToFindWikiPage);
+    getSongkickArtistID(artistQuery, getSongkickArtistDetails);
+    unhideContainers();
   });
 }
 
+/* SONGKICK API FUNCTIONALITY */
+
+function getSongkickArtistID(artistQuery, callback) {
+  const query = {
+    query: artistQuery,
+    apikey: 'mtLUgpC0c49wQgiQ'
+  };
+  $.getJSON(songkickSearchAPI, query, callback);
+}
+
+function getSongkickArtistDetails(songkickAPIData) {
+  const artistID = songkickAPIData.resultsPage.results.artist[0].id;
+  getSongkickArtistEventData(artistID, displaySongkickEventData);
+  /*getSongkickSimilarArtistsData(artistID, ...);*/
+}
+
+function getSongkickArtistEventData(artistID, callback) {
+  const songkickEventAPI = `http://api.songkick.com/api/3.0/artists/${artistID}/calendar.json`
+  const query = {
+    per_page: 5,
+    apikey: 'mtLUgpC0c49wQgiQ'
+  };
+  $.getJSON(songkickEventAPI, query, callback);
+}
+
+function displaySongkickEventData(songkickAPIData) {
+  const resultsData = songkickAPIData.resultsPage.results.event.map((item) => renderSongkickEventData(item));
+  $('.shows').append(`<span>upcoming shows</span><br><br>`);
+  $('.shows').append(resultsData);
+}
+
+function renderSongkickEventData(item) {
+  return `
+      <div class="shows-single-result">
+        <a href="${item.uri} target="_blank">
+          <span>${item.displayName}</span><br><br>
+        </a>
+        <a href="${item.venue.uri} target="_blank">
+          <span>${item.venue.displayName}</span>
+        </a>
+      </div>
+  `;
+}
+/* END SONGKICK */
+
+
+/* CLEAR / UNHIDE CONTAINERS AND INPUT FIELDS PER SUBMISSION */
 function unhideContainers() {
   $('.container').prop('hidden', false);
 }
@@ -29,10 +88,12 @@ function clearInputFields() {
   $('song.string').val("");
 }
 
-function clearResultsContainers() {
+function clearAndHideResultsContainers() {
   $('.container').empty();
+  $('.container').prop('hidden', true);
 }
 
+/* YOUTUBE API FUNCTIONALITY */
 function getYoutubeData(searchQuery, callback) {
   const query = {
     part: 'snippet',
@@ -62,6 +123,7 @@ function renderYoutubeResults(result) {
   `;
 }
 
+/* LYRICS API FUNCTIONALITY */
 function getSongData(combinedQuery, callback) {
   $.getJSON(`${lyricsSuggestAPI}/${combinedQuery}/`, callback)
 }
@@ -87,6 +149,7 @@ function displayLyricsResults(data) {
   $('.lyrics').append(lyricsData);
 }
 
+/* WIKIPEDIA API FUNCIONALITY */
 function getWikipediaSearchData(artistQuery, callback) {
   query = {
     origin: '*',
@@ -128,4 +191,5 @@ function displayWikipediaResults(data) {
   $('.wiki').append(wikiInfo);
 }
 
+/* EXECUTE ALL FUNCTION CALLS */
 handleSearchForm();
