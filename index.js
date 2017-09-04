@@ -3,15 +3,6 @@ const lyricsSuggestAPI = "https://api.lyrics.ovh/suggest";
 const youtubeAPI = "https://www.googleapis.com/youtube/v3/search";
 const wikipediaAPI = "https://en.wikipedia.org/w/api.php";
 const songkickSearchAPI = "https://api.songkick.com/api/3.0/search/artists.json";
-/*  
-calendar: 
-http://api.songkick.com/api/3.0/artists/{artist_id}/calendar.json?apikey={your_api_key}
-
-similar artists: 
-http://api.songkick.com/api/3.0/artists/{artist_id}/similar_artists.json?apikey={your_api_key} 
-
-songkick API key: mtLUgpC0c49wQgiQ 
-*/
 
 /* SEARCH FORM FUNCTIONALITY */
 function handleSearchForm() {
@@ -32,53 +23,7 @@ function handleSearchForm() {
   });
 }
 
-/* SONGKICK API FUNCTIONALITY */
-
-function getSongkickArtistID(artistQuery, callback) {
-  const query = {
-    query: artistQuery,
-    apikey: 'mtLUgpC0c49wQgiQ'
-  };
-  $.getJSON(songkickSearchAPI, query, callback);
-}
-
-function getSongkickArtistDetails(songkickAPIData) {
-  const artistID = songkickAPIData.resultsPage.results.artist[0].id;
-  getSongkickArtistEventData(artistID, displaySongkickEventData);
-  /*getSongkickSimilarArtistsData(artistID, ...);*/
-}
-
-function getSongkickArtistEventData(artistID, callback) {
-  const songkickEventAPI = `https://api.songkick.com/api/3.0/artists/${artistID}/calendar.json`
-  const query = {
-    per_page: 5,
-    apikey: 'mtLUgpC0c49wQgiQ'
-  };
-  $.getJSON(songkickEventAPI, query, callback);
-}
-
-function displaySongkickEventData(songkickAPIData) {
-  const resultsData = songkickAPIData.resultsPage.results.event.map((item) => renderSongkickEventData(item));
-  $('.shows').append(`<span>upcoming shows</span><br><br>`);
-  $('.shows').append(resultsData);
-}
-
-function renderSongkickEventData(item) {
-  return `
-      <div class="shows-single-result">
-        <a href="${item.uri} target="_blank">
-          <span>${item.displayName}</span><br><br>
-        </a>
-        <a href="${item.venue.uri} target="_blank">
-          <span>${item.venue.displayName}</span>
-        </a>
-      </div>
-  `;
-}
-/* END SONGKICK */
-
-
-/* CLEAR / UNHIDE CONTAINERS AND INPUT FIELDS PER SUBMISSION */
+/* CONTAINER AND INPUT FIELD BEHAVIORS PER SUBMISSION */
 function unhideContainers() {
   $('.container').prop('hidden', false);
 }
@@ -189,6 +134,74 @@ function displayWikipediaResults(data) {
   const wikiInfo = data.query.pages[pageID].extract;
   $('.wiki').append(`${wikiTitle}<br>`);
   $('.wiki').append(wikiInfo);
+}
+
+/* SONGKICK API FUNCTIONALITY */
+function getSongkickArtistID(artistQuery, callback) {
+  const query = {
+    query: artistQuery,
+    apikey: 'mtLUgpC0c49wQgiQ'
+  };
+  $.getJSON(songkickSearchAPI, query, callback);
+}
+
+function getSongkickArtistDetails(songkickAPIData) {
+  const artistID = songkickAPIData.resultsPage.results.artist[0].id;
+  getSongkickArtistEventData(artistID, displaySongkickEventData);
+  getSongkickSimilarArtistsData(artistID, displaySongkickSimilarArtistsData);
+}
+
+function getSongkickArtistEventData(artistID, callback) {
+  const songkickEventAPI = `https://api.songkick.com/api/3.0/artists/${artistID}/calendar.json`;
+  const query = {
+    per_page: 5,
+    apikey: 'mtLUgpC0c49wQgiQ'
+  };
+  $.getJSON(songkickEventAPI, query, callback);
+}
+
+function displaySongkickEventData(songkickAPIData) {
+  const resultsData = songkickAPIData.resultsPage.results.event.map((item) => renderSongkickEventData(item));
+  $('.shows').append(`<span>upcoming shows</span><br><br>`);
+  $('.shows').append(resultsData);
+}
+
+function renderSongkickEventData(item) {
+  return `
+      <div class="shows-single-result">
+        <a href="${item.uri} target="_blank">
+          <span>${item.displayName}</span><br><br>
+        </a>
+        <a href="${item.venue.uri} target="_blank">
+          <span>${item.venue.displayName}</span>
+        </a>
+      </div>
+  `;
+}
+
+function getSongkickSimilarArtistsData(artistID, callback) {
+  const songkickSimilarArtistsAPI = `https://api.songkick.com/api/3.0/artists/${artistID}/similar_artists.json?`;
+  const query = {
+    per_page: 5,
+    apikey: 'mtLUgpC0c49wQgiQ'
+  };
+  $.getJSON(songkickSimilarArtistsAPI, query, callback);
+}
+
+function displaySongkickSimilarArtistsData(songkickAPIData) {
+  const resultsData = songkickAPIData.resultsPage.results.artist.map((item) => renderSongkickSimilarArtistsData(item));
+  $('.similar-artists').append(`<span>similar artists</span><br><br>`);
+  $('.similar-artists').append(resultsData);
+}
+
+function renderSongkickSimilarArtistsData(item) {
+  return `
+      <div class="similar-artists-single-result">
+        <a href="${item.uri} target="_blank">
+          <span>${item.displayName}</span>
+        </a>
+      </div>
+  `;
 }
 
 /* EXECUTE ALL FUNCTION CALLS */

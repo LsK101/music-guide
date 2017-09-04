@@ -1,6 +1,6 @@
 .container {
   border: 1px solid black;
-  padding: 10px;
+  padding: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -16,6 +16,13 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+.similar-artists-single-result {
+  border: 1px solid black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .youtube-thumbnail {
   width: 100%;
 }
