@@ -2,7 +2,7 @@ const lyricsAPI = "https://api.lyrics.ovh/v1";
 const lyricsSuggestAPI = "https://api.lyrics.ovh/suggest";
 const youtubeAPI = "https://www.googleapis.com/youtube/v3/search";
 const wikipediaAPI = "https://en.wikipedia.org/w/api.php";
-const songkickSearchAPI = "http://api.songkick.com/api/3.0/search/artists.json";
+const songkickSearchAPI = "https://api.songkick.com/api/3.0/search/artists.json";
 /*  
 calendar: 
 http://api.songkick.com/api/3.0/artists/{artist_id}/calendar.json?apikey={your_api_key}
@@ -49,7 +49,7 @@ function getSongkickArtistDetails(songkickAPIData) {
 }
 
 function getSongkickArtistEventData(artistID, callback) {
-  const songkickEventAPI = `http://api.songkick.com/api/3.0/artists/${artistID}/calendar.json`
+  const songkickEventAPI = `https://api.songkick.com/api/3.0/artists/${artistID}/calendar.json`
   const query = {
     per_page: 5,
     apikey: 'mtLUgpC0c49wQgiQ'
