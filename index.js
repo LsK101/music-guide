@@ -44,7 +44,7 @@ function getYoutubeData(searchQuery, callback) {
     part: 'snippet',
     q: `artist ${searchQuery}`,
     type: 'video',
-    maxResults: 6,
+    maxResults: 8,
     key: 'AIzaSyAUuE2ybmwEb08dCMkOv6HvW1gJDi8mhbY',
     videoCategoryId: '10'
   };
@@ -70,7 +70,7 @@ function renderYoutubeResults(result) {
 
 /* LYRICS API FUNCTIONALITY */
 function getSongData(combinedQuery, callback) {
-  $.getJSON(`${lyricsSuggestAPI}/${combinedQuery}/`, callback)
+  $.getJSON(`${lyricsSuggestAPI}/${combinedQuery}/`, callback);
 }
 
 function setDataForLyricsFetch(suggestJSON) {
@@ -83,7 +83,6 @@ function setDataForLyricsFetch(suggestJSON) {
 function displaySongInformation(songArtist, songTitle) {
   $('.lyrics').append(`<span>${songArtist} - ${songTitle}</span><br><br>`);
 }
-
 
 function getLyricsData(songArtist, songTitle, callback) {
   $.getJSON(`${lyricsAPI}/${songArtist}/${songTitle}`, callback);
@@ -161,17 +160,33 @@ function getSongkickArtistEventData(artistID, callback) {
 }
 
 function displaySongkickEventData(songkickAPIData) {
-  const resultsData = songkickAPIData.resultsPage.results.event.map((item) => renderSongkickEventData(item));
-  $('.shows').append(`<span>upcoming shows</span><br><br>`);
-  $('.shows').append(resultsData);
+  if (songkickAPIData.resultsPage.totalEntries == 0) {
+    $('.shows').append(`
+      <span>upcoming shows</span><img src="./images/sk-badge-pink.png" class="songkick-logo"
+      <br>
+      <br>
+      <span>none =(</span>
+      `);
+  }
+  else {
+    const resultsData = songkickAPIData.resultsPage.results.event.map((item) => renderSongkickEventData(item));
+    $('.shows').append(`
+      <span>upcoming events</span><img src="./images/sk-badge-pink.png" class="songkick-logo">
+      <br>
+      <br>
+      `);
+    $('.shows').append(resultsData); 
+  }
 }
 
 function renderSongkickEventData(item) {
   return `
       <div class="shows-single-result">
+        <span>event:</span><br>
         <a href="${item.uri} target="_blank">
           <span>${item.displayName}</span><br><br>
         </a>
+        <span>venue:</span><br>
         <a href="${item.venue.uri} target="_blank">
           <span>${item.venue.displayName}</span>
         </a>
@@ -190,7 +205,11 @@ function getSongkickSimilarArtistsData(artistID, callback) {
 
 function displaySongkickSimilarArtistsData(songkickAPIData) {
   const resultsData = songkickAPIData.resultsPage.results.artist.map((item) => renderSongkickSimilarArtistsData(item));
-  $('.similar-artists').append(`<span>similar artists</span><br><br>`);
+  $('.similar-artists').append(`
+    <span>similar artists</span><img src="./images/sk-badge-pink.png" class="songkick-logo">
+    <br>
+    <br>
+    `);
   $('.similar-artists').append(resultsData);
 }
 

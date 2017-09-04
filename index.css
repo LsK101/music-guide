@@ -1,3 +1,16 @@
+* {
+  font-family: 'Exo', sans-serif;
+  border-radius: 5px;
+}
+
+body {
+  background-color: black;
+}
+
+main {
+  background-color: darkgray;
+}
+
 .container {
   border: 1px solid black;
   padding: 20px;
@@ -6,19 +19,20 @@
 }
 
 .youtube-single-result {
-  border: 1px solid black;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
 .shows-single-result {
   border: 1px solid black;
+  padding: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
 .similar-artists-single-result {
   border: 1px solid black;
+  padding: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -32,4 +46,11 @@
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.songkick-logo {
+  display: inline-block;
+  float: right;
+  width: 30px;
+  height: 30px;
 }
