@@ -1,23 +1,23 @@
-* {
-	box-sizing: border-box;
-}
-
 .container {
   border: 1px solid black;
-  width: 600px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
-/*to be customized per container later on*/
 
 .youtube-single-result {
   border: 1px solid black;
-  clear: left;
-  height: 200px;
-  width: 600px;
-  padding-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .youtube-thumbnail {
-  height: 100%;
-  float: left;
-  margin-right: 10px;
+  width: 100%;
+}
+
+.search-form {
+  border: 1px solid black;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

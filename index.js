@@ -38,7 +38,7 @@ function getYoutubeData(searchQuery, callback) {
     part: 'snippet',
     q: `artist ${searchQuery}`,
     type: 'video',
-    maxResults: 10,
+    maxResults: 6,
     key: 'AIzaSyAUuE2ybmwEb08dCMkOv6HvW1gJDi8mhbY',
     videoCategoryId: '10'
   };
