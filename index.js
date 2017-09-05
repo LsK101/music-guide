@@ -81,7 +81,17 @@ function setDataForLyricsFetch(suggestJSON) {
 }
 
 function displaySongInformation(songArtist, songTitle) {
-  $('.lyrics').append(`<span>${songArtist} - ${songTitle}</span><br><br>`);
+  $('.lyrics').append(`
+    <span>Song Lyrics</span>
+      <a href="http://www.lyrics.ovh" target="_blank">
+      <img src="./images/lyrics-ovh-logo.png" class="lyricsovh-logo">
+      </a>
+      <br>
+      <br>
+    <div class="song-lyrics">
+      <span>${songArtist} - ${songTitle}</span><br><br>
+    </div>
+    `);
 }
 
 function getLyricsData(songArtist, songTitle, callback) {
@@ -90,7 +100,7 @@ function getLyricsData(songArtist, songTitle, callback) {
 
 function displayLyricsResults(data) {
   const lyricsData = data.lyrics.replace(/\n/gi,"<br>");
-  $('.lyrics').append(lyricsData);
+  $('.song-lyrics').append(lyricsData);
 }
 
 /* WIKIPEDIA API FUNCIONALITY */
@@ -162,16 +172,24 @@ function getSongkickArtistEventData(artistID, callback) {
 function displaySongkickEventData(songkickAPIData) {
   if (songkickAPIData.resultsPage.totalEntries == 0) {
     $('.shows').append(`
-      <span>upcoming shows</span><img src="./images/sk-badge-pink.png" class="songkick-logo"
+      <span>Upcoming Events</span>
+      <a href="http://www.songkick.com/" target="_blank">
+      <img src="./images/powered-by-songkick-pink.png" class="songkick-logo">
+      </a>
       <br>
       <br>
-      <span>none =(</span>
+      <div class="shows-single-result">
+        <span>None</span>
+      </div>
       `);
   }
   else {
     const resultsData = songkickAPIData.resultsPage.results.event.map((item) => renderSongkickEventData(item));
     $('.shows').append(`
-      <span>upcoming events</span><img src="./images/sk-badge-pink.png" class="songkick-logo">
+      <span>Upcoming Events</span>
+      <a href="http://www.songkick.com/" target="_blank">
+      <img src="./images/powered-by-songkick-pink.png" class="songkick-logo">
+      </a>
       <br>
       <br>
       `);
@@ -182,13 +200,14 @@ function displaySongkickEventData(songkickAPIData) {
 function renderSongkickEventData(item) {
   return `
       <div class="shows-single-result">
-        <span>event:</span><br>
+        <span>Date: ${item.start.date}</span><br>
+        <span>Event:</span><br>
         <a href="${item.uri} target="_blank">
-          <span>${item.displayName}</span><br><br>
+          <span>${item.displayName}</span><br>
         </a>
-        <span>venue:</span><br>
+        <span>Venue:</span><br>
         <a href="${item.venue.uri} target="_blank">
-          <span>${item.venue.displayName}</span>
+          <span>${item.venue.displayName}</span><br>
         </a>
       </div>
   `;
@@ -206,7 +225,10 @@ function getSongkickSimilarArtistsData(artistID, callback) {
 function displaySongkickSimilarArtistsData(songkickAPIData) {
   const resultsData = songkickAPIData.resultsPage.results.artist.map((item) => renderSongkickSimilarArtistsData(item));
   $('.similar-artists').append(`
-    <span>similar artists</span><img src="./images/sk-badge-pink.png" class="songkick-logo">
+    <span>Check Out Similar Artists</span>
+    <a href="http://www.songkick.com/" target="_blank">
+    <img src="./images/powered-by-songkick-pink.png" class="songkick-logo">
+    </a>
     <br>
     <br>
     `);

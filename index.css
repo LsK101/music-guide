@@ -1,5 +1,6 @@
 * {
   font-family: 'Exo', sans-serif;
+  font-weight: bold;
   border-radius: 5px;
 }
 
@@ -11,8 +12,15 @@ main {
   background-color: darkgray;
 }
 
+.search-form {
+  border: 2px solid black;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .container {
-  border: 1px solid black;
+  border: 2px solid black;
   padding: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -37,20 +45,27 @@ main {
   margin-bottom: 10px;
 }
 
-.youtube-thumbnail {
-  width: 100%;
-}
-
-.search-form {
+.song-lyrics {
   border: 1px solid black;
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
+.youtube-thumbnail {
+  width: 100%;
+}
+
+.lyricsovh-logo {
+  display: inline-block;
+  float: right;
+  width: 195px;
+  height: 30px;
+}
+
 .songkick-logo {
   display: inline-block;
   float: right;
-  width: 30px;
+  width: 85px;
   height: 30px;
 }
