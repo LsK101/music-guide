@@ -12,14 +12,14 @@ body {
 }
 
 .search-form {
-  border: 2px solid black;
+  border: 2px solid #253237;
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
 .container {
-  border: 2px solid black;
+  border: 2px solid #253237;
   padding: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -37,7 +37,7 @@ body {
 .similar-artists-single-result, 
 .song-lyrics
  {
-  border: 1px solid black;
+  border: 1px solid #253237;
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -73,5 +73,11 @@ body {
 .songkick-logo {
   float: right;
   width: 102px;
+  height: 30px;
+}
+
+.similar-search-logo, .similar-songkick-logo {
+  display: inline-block;
+  width: 30px; 
   height: 30px;
 }

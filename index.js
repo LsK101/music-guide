@@ -30,8 +30,8 @@ function unhideContainers() {
 }
 
 function clearInputFields() {
-  $('artist.string').val("");
-  $('song.string').val("");
+  $('.artist-string').val("");
+  $('.song-string').val("");
 }
 
 function clearAndHideResultsContainers() {
@@ -250,7 +250,7 @@ function displaySongkickEventData(songkickAPIData) {
       <br>
       <br>
       <div class="shows-single-result">
-        <span>None</span>
+        <span>No Scheduled Live Performances</span>
       </div>
       `);
   }
@@ -310,12 +310,27 @@ function displaySongkickSimilarArtistsData(songkickAPIData) {
 function renderSongkickSimilarArtistsData(item) {
   return `
       <div class="similar-artists-single-result">
+        <span class="similar-artist-name"><b>${item.displayName}</b></span><br>
+        <img src="./images/search-logo.png" class="similar-search-logo">
         <a href="${item.uri} target="_blank">
-          <span>${item.displayName}</span>
+          <img src="./images/sk-badge-white.png" class="similar-songkick-logo">
         </a>
       </div>
   `;
 }
 
+function handleSearchUsingSimilarArtist() {
+  $('.similar-artists').on('click', '.similar-search-logo', event => {
+      const artistQuery = $(event.currentTarget).closest('div').find('.similar-artist-name').text();
+      clearInputFields();
+      clearAndHideResultsContainers();
+      getYoutubeData(artistQuery, displayYoutubeResults);
+      getWikipediaSearchData(artistQuery, useWikipediaSearchDataToFindWikiPage);
+      getSongkickArtistID(artistQuery, getSongkickArtistDetails);
+      unhideContainers();
+  });
+}
+
 /* EXECUTE ALL FUNCTION CALLS */
 handleSearchForm();
+handleSearchUsingSimilarArtist();
