@@ -1,3 +1,11 @@
+/*
+TO DO:
+-search history function
+-reconsider color scheme
+-top songs by band, with embedded players for song and button to search lyrics
+-add link to current band page in live shows section
+*/
+
 const lyricsAPI = "https://api.lyrics.ovh/v1";
 const lyricsSuggestAPI = "https://api.lyrics.ovh/suggest";
 const youtubeAPI = "https://www.googleapis.com/youtube/v3/search";
@@ -286,7 +294,7 @@ function renderSongkickEventData(item) {
 }
 
 function getSongkickSimilarArtistsData(artistID, callback) {
-  const songkickSimilarArtistsAPI = `https://api.songkick.com/api/3.0/artists/${artistID}/similar_artists.json?`;
+  const songkickSimilarArtistsAPI = `https://api.songkick.com/api/3.0/artists/${artistID}/similar_artists.json`;
   const query = {
     per_page: 5,
     apikey: 'mtLUgpC0c49wQgiQ'
@@ -312,7 +320,7 @@ function renderSongkickSimilarArtistsData(item) {
       <div class="similar-artists-single-result">
         <span class="similar-artist-name"><b>${item.displayName}</b></span><br>
         <img src="./images/search-logo.png" class="similar-search-logo">
-        <a href="${item.uri} target="_blank">
+        <a href="${item.uri}" target="_blank">
           <img src="./images/sk-badge-white.png" class="similar-songkick-logo">
         </a>
       </div>
