@@ -91,7 +91,7 @@ function songLyricsFetchFailure() {
       <br>
       <br>
     <div class="song-lyrics">
-      <span>No Lyrics Available</span>
+      <span>No lyrics found. Please check artist/song spelling and/or punctuation where applicable.</span>
     </div>
     `);
 }
@@ -130,12 +130,6 @@ function getLyricsData(songArtist, songTitle, callback, errorCallback) {
     success: callback,
     error: errorCallback
   });
-}
-
-function lyricsFetchErrorResponse() {
-  $('.song-lyrics').append(`
-    No Lyrics Available
-    `);
 }
 
 function displayLyricsResults(data) {
