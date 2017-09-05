@@ -81,28 +81,24 @@ body {
 }
 
 .wiki-logo {
-  display: inline-block;
   float: right;
   width: 33px;
   height: 30px;
 }
 
 .youtube-logo {
-  display: inline-block;
   float: right;
   width: 71px;
   height: 30px;
 }
 
 .lyricsovh-logo {
-  display: inline-block;
   float: right;
   width: 195px;
   height: 30px;
 }
 
 .songkick-logo {
-  display: inline-block;
   float: right;
   width: 102px;
   height: 30px;

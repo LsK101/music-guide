@@ -97,7 +97,7 @@ function songLyricsFetchFailure() {
 }
 
 function setDataForLyricsFetch(suggestJSON) {
-  if (suggestJSON.total == 0) {
+  if (suggestJSON.total === 0) {
     songLyricsFetchFailure();
   }
   else {
@@ -146,7 +146,7 @@ function getWikipediaSearchData(artistQuery, callback) {
     format: 'json',
     srsearch: `${artistQuery} music artist`
   };
-  $.getJSON(wikipediaAPI, query, callback)
+  $.getJSON(wikipediaAPI, query, callback);
 }
 
 function useWikipediaSearchDataToFindWikiPage(wikiJSON) {
@@ -169,7 +169,7 @@ function getWikipediaPageData(songArtist, callback) {
     pithumbsize: 250,
     titles: songArtist
   };
-  $.getJSON(wikipediaAPI, query, callback)
+  $.getJSON(wikipediaAPI, query, callback);
 }
 
 function displayWikipediaResults(data) {
@@ -201,7 +201,7 @@ function getPageURL(pageID, callback) {
     inprop: 'url',
     indexpageids: 1
   };
-  $.getJSON(wikipediaAPI, query, callback)
+  $.getJSON(wikipediaAPI, query, callback);
 }
 
 function displayLinkToWikipediaPage(data) {
@@ -241,7 +241,7 @@ function getSongkickArtistEventData(artistID, callback) {
 }
 
 function displaySongkickEventData(songkickAPIData) {
-  if (songkickAPIData.resultsPage.totalEntries == 0) {
+  if (songkickAPIData.resultsPage.totalEntries === 0) {
     $('.shows').append(`
       <span class="section-header">See Them Live</span>
       <a href="http://www.songkick.com/" target="_blank">
