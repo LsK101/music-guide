@@ -67,7 +67,6 @@ function displayYoutubeResults(data) {
       <img src="./images/youtube-logo.png" class="youtube-logo">
       </a>
       <br>
-      <br>
     `);
   const resultsData = data.items.map((item) => renderYoutubeResults(item));
   $('.youtube').append(resultsData);
@@ -97,7 +96,6 @@ function songLyricsFetchFailure() {
       <img src="./images/lyricsovh-logo.png" class="lyricsovh-logo">
       </a>
       <br>
-      <br>
     <div class="song-lyrics">
       <span>No lyrics found. Please check artist/song spelling and/or punctuation where applicable.</span>
     </div>
@@ -122,7 +120,6 @@ function displaySongInformation(songArtist, songTitle) {
       <a href="http://www.lyrics.ovh" target="_blank">
       <img src="./images/lyricsovh-logo.png" class="lyricsovh-logo">
       </a>
-      <br>
       <br>
     <div class="song-lyrics">
       <span>${songArtist} - ${songTitle}</span><br><br>
@@ -190,7 +187,6 @@ function displayWikipediaResults(data) {
     <img src="./images/wiki-logo.png" class="wiki-logo">
     </a>
     <br>
-    <br>
     <div class="wiki-result">
     </div>
   `);
@@ -235,8 +231,27 @@ function getSongkickArtistID(artistQuery, callback) {
 
 function getSongkickArtistDetails(songkickAPIData) {
   const artistID = songkickAPIData.resultsPage.results.artist[0].id;
+  const artistURL = songkickAPIData.resultsPage.results.artist[0].uri;
+  const artistName = songkickAPIData.resultsPage.results.artist[0].displayName;
+  displayArtistEventHeaderAndSongkickLink(artistURL, artistName);
   getSongkickArtistEventData(artistID, displaySongkickEventData);
   getSongkickSimilarArtistsData(artistID, displaySongkickSimilarArtistsData);
+}
+
+function displayArtistEventHeaderAndSongkickLink(artistURL, artistName) {
+  $('.shows').append(`
+      <span class="section-header">See Them Live</span>
+      <a href="http://www.songkick.com/" target="_blank">
+      <img src="./images/by-songkick-white.png" class="songkick-logo">
+      </a>
+      <br>
+      <div class="shows-single-result">
+      <span><b>${artistName}</b></span><br>
+        <a href="${artistURL}" target="_blank">
+          <img src="./images/sk-badge-white.png" class="similar-songkick-logo">
+        </a>
+      </div>
+      `);
 }
 
 function getSongkickArtistEventData(artistID, callback) {
@@ -251,12 +266,6 @@ function getSongkickArtistEventData(artistID, callback) {
 function displaySongkickEventData(songkickAPIData) {
   if (songkickAPIData.resultsPage.totalEntries === 0) {
     $('.shows').append(`
-      <span class="section-header">See Them Live</span>
-      <a href="http://www.songkick.com/" target="_blank">
-      <img src="./images/by-songkick-white.png" class="songkick-logo">
-      </a>
-      <br>
-      <br>
       <div class="shows-single-result">
         <span>No Scheduled Live Performances</span>
       </div>
@@ -264,14 +273,6 @@ function displaySongkickEventData(songkickAPIData) {
   }
   else {
     const resultsData = songkickAPIData.resultsPage.results.event.map((item) => renderSongkickEventData(item));
-    $('.shows').append(`
-      <span class="section-header">See Them Live</span>
-      <a href="http://www.songkick.com/" target="_blank">
-      <img src="./images/by-songkick-white.png" class="songkick-logo">
-      </a>
-      <br>
-      <br>
-      `);
     $('.shows').append(resultsData); 
   }
 }
@@ -309,7 +310,6 @@ function displaySongkickSimilarArtistsData(songkickAPIData) {
     <a href="http://www.songkick.com/" target="_blank">
     <img src="./images/by-songkick-white.png" class="songkick-logo">
     </a>
-    <br>
     <br>
     `);
   $('.similar-artists').append(resultsData);
