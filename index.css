@@ -4,11 +4,11 @@
 }
 
 body {
-  background-color: black;
+  background-color: #253237;
 }
 
 .row {
-  background-color: slategray;
+  background-color: #5C6B73;
 }
 
 .search-form {
@@ -30,50 +30,22 @@ body {
   font-weight: bold;
 }
 
-.wiki-result {
+.wiki-result,
+.wiki-footer,
+.youtube-single-result, 
+.shows-single-result, 
+.similar-artists-single-result, 
+.song-lyrics
+ {
   border: 1px solid black;
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
-}
-
-.wiki-footer {
-  border: 1px solid black;
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  background-color: #9DB4C0;
 }
 
 .wiki-footer-text {
   font-size: 20px;
-}
-
-.youtube-single-result {
-  border: 1px solid black;
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.shows-single-result {
-  border: 1px solid black;
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.similar-artists-single-result {
-  border: 1px solid black;
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.song-lyrics {
-  border: 1px solid black;
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 .youtube-thumbnail {
