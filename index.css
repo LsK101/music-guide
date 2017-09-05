@@ -1,15 +1,14 @@
 * {
   font-family: 'Exo', sans-serif;
-  font-weight: bold;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 body {
   background-color: black;
 }
 
-main {
-  background-color: darkgray;
+.row {
+  background-color: slategray;
 }
 
 .search-form {
@@ -26,7 +25,32 @@ main {
   margin-bottom: 10px;
 }
 
+.section-header {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.wiki-result {
+  border: 1px solid black;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.wiki-footer {
+  border: 1px solid black;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.wiki-footer-text {
+  font-size: 20px;
+}
+
 .youtube-single-result {
+  border: 1px solid black;
+  padding: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -56,6 +80,20 @@ main {
   width: 100%;
 }
 
+.wiki-logo {
+  display: inline-block;
+  float: right;
+  width: 33px;
+  height: 30px;
+}
+
+.youtube-logo {
+  display: inline-block;
+  float: right;
+  width: 71px;
+  height: 30px;
+}
+
 .lyricsovh-logo {
   display: inline-block;
   float: right;
@@ -66,6 +104,6 @@ main {
 .songkick-logo {
   display: inline-block;
   float: right;
-  width: 85px;
+  width: 102px;
   height: 30px;
 }

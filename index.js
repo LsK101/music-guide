@@ -15,6 +15,7 @@ function handleSearchForm() {
     clearAndHideResultsContainers();
     if (songQuery !== "") {
       getSongData(combinedQuery, setDataForLyricsFetch);
+      $('.lyrics').prop('hidden', false);
     }
     getYoutubeData(combinedQuery, displayYoutubeResults);
     getWikipediaSearchData(artistQuery, useWikipediaSearchDataToFindWikiPage);
@@ -25,7 +26,7 @@ function handleSearchForm() {
 
 /* CONTAINER AND INPUT FIELD BEHAVIORS PER SUBMISSION */
 function unhideContainers() {
-  $('.container').prop('hidden', false);
+  $('.hidden').prop('hidden', false);
 }
 
 function clearInputFields() {
@@ -44,7 +45,7 @@ function getYoutubeData(searchQuery, callback) {
     part: 'snippet',
     q: `artist ${searchQuery}`,
     type: 'video',
-    maxResults: 8,
+    maxResults: 10,
     key: 'AIzaSyAUuE2ybmwEb08dCMkOv6HvW1gJDi8mhbY',
     videoCategoryId: '10'
   };
@@ -52,8 +53,16 @@ function getYoutubeData(searchQuery, callback) {
 }
 
 function displayYoutubeResults(data) {
+  $('.youtube').append(`
+    <span class="section-header">Video</span>
+      <a href="https://www.youtube.com" target="_blank">
+      <img src="./images/youtube-logo.png" class="youtube-logo">
+      </a>
+      <br>
+      <br>
+    `);
   const resultsData = data.items.map((item) => renderYoutubeResults(item));
-  $('.youtube').html(resultsData);
+  $('.youtube').append(resultsData);
 }
 
 function renderYoutubeResults(result) {
@@ -73,16 +82,35 @@ function getSongData(combinedQuery, callback) {
   $.getJSON(`${lyricsSuggestAPI}/${combinedQuery}/`, callback);
 }
 
+function songLyricsFetchFailure() {
+  $('.lyrics').empty().append(`
+    <span class="section-header">Song Lyrics</span>
+      <a href="http://www.lyrics.ovh" target="_blank">
+      <img src="./images/lyricsovh-logo.png" class="lyricsovh-logo">
+      </a>
+      <br>
+      <br>
+    <div class="song-lyrics">
+      <span>No Lyrics Available</span>
+    </div>
+    `);
+}
+
 function setDataForLyricsFetch(suggestJSON) {
-  const songArtist = suggestJSON.data[0].artist.name;
-  const songTitle = suggestJSON.data[0].title;
-  displaySongInformation(songArtist, songTitle);
-  getLyricsData(songArtist, songTitle, displayLyricsResults);
+  if (suggestJSON.total == 0) {
+    songLyricsFetchFailure();
+  }
+  else {
+    const songArtist = suggestJSON.data[0].artist.name;
+    const songTitle = suggestJSON.data[0].title;
+    displaySongInformation(songArtist, songTitle);
+    getLyricsData(songArtist, songTitle, displayLyricsResults, songLyricsFetchFailure);
+  }
 }
 
 function displaySongInformation(songArtist, songTitle) {
   $('.lyrics').append(`
-    <span>Song Lyrics</span>
+    <span class="section-header">Song Lyrics</span>
       <a href="http://www.lyrics.ovh" target="_blank">
       <img src="./images/lyricsovh-logo.png" class="lyricsovh-logo">
       </a>
@@ -94,8 +122,20 @@ function displaySongInformation(songArtist, songTitle) {
     `);
 }
 
-function getLyricsData(songArtist, songTitle, callback) {
+function getLyricsData(songArtist, songTitle, callback, errorCallback) {
   $.getJSON(`${lyricsAPI}/${songArtist}/${songTitle}`, callback);
+  $.ajax({
+    url: `${lyricsAPI}/${songArtist}/${songTitle}`,
+    dataType: 'json',
+    success: callback,
+    error: errorCallback
+  });
+}
+
+function lyricsFetchErrorResponse() {
+  $('.song-lyrics').append(`
+    No Lyrics Available
+    `);
 }
 
 function displayLyricsResults(data) {
@@ -117,6 +157,7 @@ function getWikipediaSearchData(artistQuery, callback) {
 
 function useWikipediaSearchDataToFindWikiPage(wikiJSON) {
   const songArtist = wikiJSON.query.search[0].title;
+  const pageID = wikiJSON.query.search[0].pageid;
   getWikipediaPageData(songArtist, displayWikipediaResults);
 }
 
@@ -141,8 +182,44 @@ function displayWikipediaResults(data) {
   const pageID = data.query.pageids[0];
   const wikiTitle = data.query.pages[pageID].title;
   const wikiInfo = data.query.pages[pageID].extract;
-  $('.wiki').append(`${wikiTitle}<br>`);
-  $('.wiki').append(wikiInfo);
+  $('.wiki').append(`
+    <span class="section-header">Wikipedia</span>
+    <a href="https://www.wikipedia.org/" target="_blank">
+    <img src="./images/wiki-logo.png" class="wiki-logo">
+    </a>
+    <br>
+    <br>
+    <div class="wiki-result">
+    </div>
+  `);
+  $('.wiki-result').append(`${wikiTitle}<br>`);
+  $('.wiki-result').append(wikiInfo);
+  getPageURL(pageID, displayLinkToWikipediaPage);
+}
+
+function getPageURL(pageID, callback) {
+  const query = {
+    origin: "*",
+    action: 'query',
+    format: 'json',
+    prop: 'info',
+    pageids: pageID,
+    inprop: 'url',
+    indexpageids: 1
+  };
+  $.getJSON(wikipediaAPI, query, callback)
+}
+
+function displayLinkToWikipediaPage(data) {
+  const pageID = data.query.pageids[0];
+  const wikiResultURL = data.query.pages[pageID].fullurl;
+  $('.wiki').append(`
+    <a href="${wikiResultURL}" target="_blank">
+      <div class="wiki-footer">
+        <span class="wiki-footer-text">Read More On Wikipedia</span>
+      </div>
+    </a>
+  `);
 }
 
 /* SONGKICK API FUNCTIONALITY */
@@ -172,9 +249,9 @@ function getSongkickArtistEventData(artistID, callback) {
 function displaySongkickEventData(songkickAPIData) {
   if (songkickAPIData.resultsPage.totalEntries == 0) {
     $('.shows').append(`
-      <span>Upcoming Events</span>
+      <span class="section-header">See Them Live</span>
       <a href="http://www.songkick.com/" target="_blank">
-      <img src="./images/powered-by-songkick-pink.png" class="songkick-logo">
+      <img src="./images/by-songkick-white.png" class="songkick-logo">
       </a>
       <br>
       <br>
@@ -186,9 +263,9 @@ function displaySongkickEventData(songkickAPIData) {
   else {
     const resultsData = songkickAPIData.resultsPage.results.event.map((item) => renderSongkickEventData(item));
     $('.shows').append(`
-      <span>Upcoming Events</span>
+      <span class="section-header">See Them Live</span>
       <a href="http://www.songkick.com/" target="_blank">
-      <img src="./images/powered-by-songkick-pink.png" class="songkick-logo">
+      <img src="./images/by-songkick-white.png" class="songkick-logo">
       </a>
       <br>
       <br>
@@ -200,12 +277,13 @@ function displaySongkickEventData(songkickAPIData) {
 function renderSongkickEventData(item) {
   return `
       <div class="shows-single-result">
-        <span>Date: ${item.start.date}</span><br>
-        <span>Event:</span><br>
+        <span><b>Date:</b> ${item.start.date}</span><br>
+        <span><b>Location:</b> ${item.location.city}</span><br>
+        <span><b>Event:</b></span><br>
         <a href="${item.uri} target="_blank">
           <span>${item.displayName}</span><br>
         </a>
-        <span>Venue:</span><br>
+        <span><b>Venue:</b></span><br>
         <a href="${item.venue.uri} target="_blank">
           <span>${item.venue.displayName}</span><br>
         </a>
@@ -225,9 +303,9 @@ function getSongkickSimilarArtistsData(artistID, callback) {
 function displaySongkickSimilarArtistsData(songkickAPIData) {
   const resultsData = songkickAPIData.resultsPage.results.artist.map((item) => renderSongkickSimilarArtistsData(item));
   $('.similar-artists').append(`
-    <span>Check Out Similar Artists</span>
+    <span class="section-header">Artists You May Like</span>
     <a href="http://www.songkick.com/" target="_blank">
-    <img src="./images/powered-by-songkick-pink.png" class="songkick-logo">
+    <img src="./images/by-songkick-white.png" class="songkick-logo">
     </a>
     <br>
     <br>
