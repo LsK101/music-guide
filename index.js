@@ -84,7 +84,7 @@ function displaySongInformation(songArtist, songTitle) {
   $('.lyrics').append(`
     <span>Song Lyrics</span>
       <a href="http://www.lyrics.ovh" target="_blank">
-      <img src="./images/lyrics-ovh-logo.png" class="lyricsovh-logo">
+      <img src="./images/lyricsovh-logo.png" class="lyricsovh-logo">
       </a>
       <br>
       <br>
