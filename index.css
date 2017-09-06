@@ -25,6 +25,13 @@ body {
   margin-bottom: 10px;
 }
 
+.search-history-container {
+  border: 2px solid #253237;
+  padding: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .section-header {
   font-size: 25px;
   font-weight: bold;
@@ -35,7 +42,8 @@ body {
 .youtube-single-result, 
 .shows-single-result, 
 .similar-artists-single-result, 
-.song-lyrics
+.song-lyrics,
+.search-history-entry
  {
   border: 1px solid #253237;
   padding: 10px;
