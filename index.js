@@ -9,6 +9,8 @@ const youtubeAPI = "https://www.googleapis.com/youtube/v3/search";
 const wikipediaAPI = "https://en.wikipedia.org/w/api.php";
 const songkickSearchAPI = "https://api.songkick.com/api/3.0/search/artists.json";
 
+let searchCounter = 0;
+
 /* SEARCH FORM FUNCTIONALITY */
 function handleSearchForm() {
   $('.search-form').submit(event => {
@@ -18,6 +20,7 @@ function handleSearchForm() {
     const combinedQuery = `${artistQuery} ${songQuery}`;
     clearInputFields();
     clearAndHideResultsContainers();
+    preventSearchHistoryOverflow();
     addSearchHistoryEntry(artistQuery, songQuery);
     getLyricsIfSongQueryGiven(songQuery, combinedQuery);
     getYoutubeData(combinedQuery, displayYoutubeResults);
@@ -43,6 +46,13 @@ function clearAndHideResultsContainers() {
 }
 
 /* SEARCH HISTORY FUNCTIONALITY */
+function preventSearchHistoryOverflow() {
+  searchCounter++;
+  if (searchCounter > 5) {
+    $('.search-history').find('.search-history-entry:first').remove();
+  }
+}
+
 function addSearchHistoryEntry(artistQuery, songQuery) {
   if (songQuery == "") {
     $('.search-history').append(`
@@ -69,7 +79,7 @@ function addSearchHistoryEntry(artistQuery, songQuery) {
 function handleSearchUsingSearchHistory() {
   $('.search-history').on('click', '.similar-search-logo', event => {
       const artistQuery = $(event.currentTarget).closest('div').find('.search-history-artist').text();
-      const songQuery = $(event.currentTarget).closest('div').find('.search-history-song').text()
+      const songQuery = $(event.currentTarget).closest('div').find('.search-history-song').text();
       const combinedQuery = `${artistQuery} ${songQuery}`;
       clearInputFields();
       clearAndHideResultsContainers();
