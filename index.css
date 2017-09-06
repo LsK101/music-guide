@@ -1,10 +1,19 @@
 * {
   font-family: 'Exo', sans-serif;
-  border-radius: 10px;
 }
 
 body {
   background-color: #253237;
+}
+
+body, 
+main, 
+div, 
+form, 
+input, 
+section, 
+button {
+  border-radius: 10px;
 }
 
 .row {
@@ -76,6 +85,7 @@ body {
   float: right;
   width: 195px;
   height: 30px;
+  border-radius: 10px;
 }
 
 .songkick-logo {
