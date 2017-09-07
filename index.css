@@ -18,14 +18,10 @@ body {
   margin-bottom: 10px;
 }
 
-.container {
-  border: 2px solid #253237;
-  padding: 20px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.search-history-container {
+.container,
+.search-history-container,
+.similar-artists-history-container
+ {
   border: 2px solid #253237;
   padding: 20px;
   margin-top: 10px;
@@ -43,7 +39,8 @@ body {
 .shows-single-result, 
 .similar-artists-single-result, 
 .song-lyrics,
-.search-history-entry
+.search-history-entry,
+.similar-artists-history-entry
  {
   border: 1px solid #253237;
   padding: 10px;

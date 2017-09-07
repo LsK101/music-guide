@@ -11,6 +11,7 @@ const wikipediaAPI = "https://en.wikipedia.org/w/api.php";
 const songkickSearchAPI = "https://api.songkick.com/api/3.0/search/artists.json";
 
 let searchCounter = 0;
+let similarArtistsSearchCounter = 0;
 
 /* SEARCH FORM FUNCTIONALITY */
 function handleSearchForm() {
@@ -389,6 +390,42 @@ function renderSongkickSimilarArtistsData(item) {
 function handleSearchUsingSimilarArtist() {
   $('.similar-artists').on('click', '.similar-search-logo', event => {
       const artistQuery = $(event.currentTarget).closest('div').find('.similar-artist-name').text();
+      preventDiscoveredHistoryOverflow();
+      addDiscoveredHistoryEntry(artistQuery);
+      unhideDiscoveredHistoryContainer();
+      clearInputFields();
+      clearAndHideResultsContainers();
+      getYoutubeData(artistQuery, displayYoutubeResults);
+      getWikipediaSearchData(artistQuery, useWikipediaSearchDataToFindWikiPage);
+      getSongkickArtistID(artistQuery, getSongkickArtistDetails);
+      unhideContainers();
+  });
+}
+
+/* DISCOVERED (THROUGH SIMILAR ARTISTS) HISTORY FUNCTIONALITY */
+function preventDiscoveredHistoryOverflow() {
+  similarArtistsSearchCounter++;
+  if (similarArtistsSearchCounter > 5) {
+    $('.similar-artists-history').find('.similar-artists-history-entry:first').remove();
+  }
+}
+
+function addDiscoveredHistoryEntry(artistQuery) {
+  $('.similar-artists-history').append(`
+    <div class="similar-artists-history-entry">
+      <span class="similar-artists-history-artist"><b>${artistQuery}</b></span><br>
+      <img src="./images/search-logo.png" class="similar-search-logo">
+    </div>
+    `);
+}
+
+function unhideDiscoveredHistoryContainer() {
+  $('.similar-artists-history-container').prop('hidden', false);
+}
+
+function handleSearchUsingDiscoveredHistory() {
+  $('.similar-artists-history').on('click', '.similar-search-logo', event => {
+      const artistQuery = $(event.currentTarget).closest('div').find('.similar-artists-history-artist').text();
       clearInputFields();
       clearAndHideResultsContainers();
       getYoutubeData(artistQuery, displayYoutubeResults);
@@ -401,4 +438,5 @@ function handleSearchUsingSimilarArtist() {
 /* EXECUTE ALL FUNCTION CALLS */
 handleSearchForm();
 handleSearchUsingSearchHistory();
+handleSearchUsingDiscoveredHistory();
 handleSearchUsingSimilarArtist();
