@@ -2,6 +2,11 @@
 TO DO:
 -hamburger navigation
 -async to make page data show altogether
+-scroll to top of window when making searches
+-consider making recent searches / discovered sections smaller
+-consider 3 column layout when in desktop width
+-consider styling changes (border style, search button, input fields, etc.)
+-aria, a11y
 */
 
 const lyricsAPI = "https://api.lyrics.ovh/v1";
@@ -86,7 +91,7 @@ function handleSearchUsingSearchHistory() {
       clearInputFields();
       clearAndHideResultsContainers();
       getLyricsIfSongQueryGiven(songQuery, combinedQuery);
-      getYoutubeData(artistQuery, displayYoutubeResults);
+      getYoutubeData(combinedQuery, displayYoutubeResults);
       getWikipediaSearchData(artistQuery, useWikipediaSearchDataToFindWikiPage);
       getSongkickArtistID(artistQuery, getSongkickArtistDetails);
       unhideContainers();
