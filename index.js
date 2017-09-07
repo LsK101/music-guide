@@ -1,6 +1,7 @@
 /*
 TO DO:
 -hamburger navigation
+-async to make page data show altogether
 */
 
 const lyricsAPI = "https://api.lyrics.ovh/v1";
