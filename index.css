@@ -4,11 +4,15 @@
 }
 
 body {
-  background-color: #253237;
+  background-image: url('./images/festival-crowd.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .row {
   background-color: #5C6B73;
+  opacity: 0.9;
 }
 
 .search-form {
@@ -16,6 +20,7 @@ body {
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
+  opacity: 0.9;
 }
 
 .container,
