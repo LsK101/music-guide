@@ -1,14 +1,3 @@
-/*
-TO DO:
--hamburger navigation
--async to make page data show altogether
--scroll to top of window when making searches
--consider making recent searches / discovered sections smaller
--consider 3 column layout when in desktop width
--consider styling changes (border style, search button, input fields, etc.)
--aria, a11y
-*/
-
 const lyricsAPI = "https://api.lyrics.ovh/v1";
 const lyricsSuggestAPI = "https://api.lyrics.ovh/suggest";
 const youtubeAPI = "https://www.googleapis.com/youtube/v3/search";
@@ -113,7 +102,7 @@ function getYoutubeData(searchQuery, callback) {
 
 function displayYoutubeResults(data) {
   $('.youtube').append(`
-    <span class="section-header">Video</span>
+    <span role="heading" class="section-header">Video</span>
       <a href="https://www.youtube.com" target="_blank">
       <img src="./images/youtube-logo.png" class="youtube-logo">
       </a>
@@ -151,7 +140,7 @@ function getSongData(combinedQuery, callback) {
 
 function songLyricsFetchFailure() {
   $('.lyrics').empty().append(`
-    <span class="section-header">Song Lyrics</span>
+    <span role="heading" class="section-header">Song Lyrics</span>
       <a href="http://www.lyrics.ovh" target="_blank">
       <img src="./images/lyricsovh-logo.png" class="lyricsovh-logo">
       </a>
@@ -177,7 +166,7 @@ function setDataForLyricsFetch(suggestJSON) {
 
 function displaySongInformation(songArtist, songTitle) {
   $('.lyrics').append(`
-    <span class="section-header">Song Lyrics</span>
+    <span role="heading" class="section-header">Song Lyrics</span>
       <a href="http://www.lyrics.ovh" target="_blank">
       <img src="./images/lyricsovh-logo.png" class="lyricsovh-logo">
       </a>
@@ -244,7 +233,7 @@ function displayWikipediaResults(data) {
   const wikiTitle = data.query.pages[pageID].title;
   const wikiInfo = data.query.pages[pageID].extract;
   $('.wiki').append(`
-    <span class="section-header">Wikipedia</span>
+    <span role="heading" class="section-header">Wikipedia</span>
     <a href="https://www.wikipedia.org/" target="_blank">
     <img src="./images/wiki-logo.png" class="wiki-logo">
     </a>
@@ -303,7 +292,7 @@ function getSongkickArtistDetails(songkickAPIData) {
 
 function displayArtistEventHeaderAndSongkickLink(artistURL, artistName) {
   $('.shows').append(`
-      <span class="section-header">See Them Live</span>
+      <span role="heading" class="section-header">See Them Live</span>
       <a href="http://www.songkick.com/" target="_blank">
       <img src="./images/by-songkick-white.png" class="songkick-logo">
       </a>
@@ -370,7 +359,7 @@ function getSongkickSimilarArtistsData(artistID, callback) {
 function displaySongkickSimilarArtistsData(songkickAPIData) {
   const resultsData = songkickAPIData.resultsPage.results.artist.map((item) => renderSongkickSimilarArtistsData(item));
   $('.similar-artists').append(`
-    <span class="section-header">Similar Artists</span>
+    <span role="heading" class="section-header">Similar Artists</span>
     <a href="http://www.songkick.com/" target="_blank">
     <img src="./images/by-songkick-white.png" class="songkick-logo">
     </a>
