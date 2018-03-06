@@ -1,15 +1,8 @@
 * {
   font-family: 'Exo', sans-serif;
-  border-radius: 10px;
+  border-radius: 2px;
 }
-/*
-body {
-  background-image: url('./images/festival-crowd.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-*/
+
 body:before {
   content: "";
   display: block;
@@ -19,20 +12,64 @@ body:before {
   width: 100%;
   height: 100%;
   z-index: -10;
-  background: url('./images/festival-crowd.jpg') no-repeat center center;
+  background: url('./images/background.jpg') no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
 
+a:link,
+a:visited,
+a:active {
+  color: #322039;
+}
+
+a:hover {
+  color: #D2BFD8;
+}
+
 .row {
-  background-color: #5C6B73;
+  background-color: #865597;
   opacity: 0.9;
 }
 
+.artist-string,
+.song-string,
+.search-button,
+.search-form,
+.container,
+.search-history-container,
+.similar-artists-history-container,
+.wiki-result,
+.wiki-footer,
+.youtube-single-result, 
+.shows-single-result, 
+.similar-artists-single-result, 
+.song-lyrics,
+.search-history-entry,
+.similar-artists-history-entry {
+  border: 2px solid #432B4C;
+}
+
+.artist-string,
+.song-string {
+  background-color: #E1D5E5;
+}
+
+.search-button {
+  background-color: #956AA4;
+}
+
+.site-logo {
+  width: 100%;
+}
+
+.landing-header {
+  padding: 10px;
+}
+
 .search-form {
-  border: 2px solid #253237;
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -43,7 +80,6 @@ body:before {
 .search-history-container,
 .similar-artists-history-container
  {
-  border: 2px solid #253237;
   padding: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -63,11 +99,10 @@ body:before {
 .search-history-entry,
 .similar-artists-history-entry
  {
-  border: 1px solid #253237;
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
-  background-color: #9DB4C0;
+  background-color: #956AA4;
 }
 
 .wiki-footer-text {

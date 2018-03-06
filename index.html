@@ -10,13 +10,30 @@
   </head>
   <body>
     <main role="main">
+
+      <div class="row landing-header">
+        <div class="col-6">
+        <span>
+          <img class="site-logo" src="./images/site-logo.png">
+        </span>
+        </div>
+
+        <div class="col-6">
+        <span>
+          MusicGuide is a quick way to learn more about musicians! Lookup artists
+          to find song lyrics, music videos, and Wikipedia information!
+        </span>
+        </div>
+
+      </div>
+
       <div class="row">
 
         <form role="search" action="#" class="search-form col-12">
           <label for="search-music">Search For an Artist <b>OR</b> an Artist/Song Combination (For Song Lyrics, If Available):</label><br>
           <input role="searchbox" id="search-music" type="text" class="artist-string" placeholder="Artist" required>
           <input role="searchbox" id="search-music" type="text" class="song-string" placeholder="Song">
-          <button role="button" type="submit">Search</button>
+          <button class="search-button" role="button" type="submit">Search</button>
         </form>
 
       </div>
@@ -41,12 +58,6 @@
           </section>
 
           <section role="region" class="wiki container hidden" hidden>
-          </section>
-
-          <section role="region" class="shows container hidden" hidden>
-          </section>
-
-          <section role="region" class="similar-artists container hidden" hidden>
           </section>
 
         </div>
