@@ -9,5 +9,4 @@ Screenshots:
 
 MusicGuide allows you to search song lyrics, music videos, and information about your favorite music artists all in one place.
 
-The app is fully responsive and works in mobile (portrait/landscape) and in desktop,
-and is made possible strictly with HTML, CSS, JS, and JQuery.
+Created using HTML, CSS, JavaScript, and jQuery.
