@@ -3,6 +3,10 @@
   border-radius: 2px;
 }
 
+body {
+  margin-bottom: 72px;
+}
+
 body:before {
   content: "";
   display: block;
@@ -145,4 +149,38 @@ a:hover {
   display: inline-block;
   width: 30px; 
   height: 30px;
+}
+
+.mobile-navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 0 auto;
+  background-color: #956AA4;
+}
+
+.hamburger-icon {
+  margin: 10px;
+  width: 188px;
+  display: inline-block;
+}
+
+.navbar-link {
+  text-decoration: none;
+}
+
+.mobile-navbar-list {
+  margin-top: 0px;
+  padding-left: 14px;
+}
+
+.mobile-navbar-list li {
+  list-style: none;
+  display: block;
+  margin-top: 20px;
+  margin-left: 0px;
 }

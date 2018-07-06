@@ -302,7 +302,64 @@ function handleSearchUsingDiscoveredHistory() {
   });
 }
 
+/* NAVBAR FUNCTIONS */
+function showMobileNav() {
+  $('.main-container').on('click', '.mobile-navbar', () => {
+    $('.mobile-navbar-list').toggle([750]);
+  });
+}
+
+function scrollToSearch() {
+  $('.main-container').on('click', '#search-link', () => {
+    $('html, body').animate({
+      scrollTop: $('#search').offset().top -10
+    }, 750);
+  });
+}
+
+function scrollToRecentSearches() {
+  $('.main-container').on('click', '#recents-link', () => {
+    $('html, body').animate({
+      scrollTop: $('#recents').offset().top -10
+    }, 750);
+  });
+}
+
+function scrollToSongLyrics() {
+  $('.main-container').on('click', '#lyrics-link', () => {
+    $('html, body').animate({
+      scrollTop: $('#lyrics').offset().top -10
+    }, 750);
+  });
+}
+
+function scrollToWikipedia() {
+  $('.main-container').on('click', '#wiki-link', () => {
+    $('html, body').animate({
+      scrollTop: $('#wiki').offset().top -10
+    }, 750);
+  });
+}
+
+function scrollToVideos() {
+  $('.main-container').on('click', '#video-link', () => {
+    $('html, body').animate({
+      scrollTop: $('#video').offset().top -10
+    }, 750);
+  });
+}
+
+function handleNavbarFunctions() {
+  showMobileNav();
+  scrollToSearch();
+  scrollToRecentSearches();
+  scrollToSongLyrics();
+  scrollToWikipedia();
+  scrollToVideos();
+}
+
 /* EXECUTE ALL FUNCTION CALLS */
 handleSearchForm();
 handleSearchUsingSearchHistory();
 handleSearchUsingDiscoveredHistory();
+handleNavbarFunctions();

@@ -10,7 +10,38 @@
     <link rel="shortcut icon" href="./images/favicon.ico">
   </head>
   <body>
-    <main role="main">
+    <main role="main" class="main-container">
+
+      <div class="mobile-navbar">
+        <img class="hamburger-icon" src="./images/hamburger-with-text-black.png">
+        <ul class="mobile-navbar-list" hidden>
+          <li>
+            <a id="search-link" class="navbar-link" href="#">
+              Artist/Song Search
+            </a>
+          </li>
+          <li>
+            <a id="recents-link" class="navbar-link" href="#">
+              Recently Searched
+            </a>
+          </li>
+          <li>
+            <a id="lyrics-link" class="navbar-link" href="#">
+              Song Lyrics
+            </a>
+          </li>
+          <li>
+            <a id="wiki-link" class="navbar-link" href="#">
+              Wikipedia
+            </a>
+          </li>
+          <li>
+            <a id="video-link" class="navbar-link" href="#">
+              Youtube Videos
+            </a>
+          </li>
+        </ul>
+      </div>
 
       <div class="row landing-header">
         <div class="col-6">
@@ -27,7 +58,7 @@
 
       <div class="row">
 
-        <form role="search" action="#" class="search-form col-12">
+        <form role="search" action="#" class="search-form col-12" id="search">
           <label for="search-music">Enter an artist to find Youtube videos and Wikipedia information, or enter an artist and a song to find specific music videos and song lyrics.</label><br>
           <input role="searchbox" id="search-music" type="text" class="artist-string" placeholder="Artist" required>
           <input role="searchbox" id="search-music" type="text" class="song-string" placeholder="Song">
@@ -40,7 +71,7 @@
 
         <div class="col-6">
 
-          <section role="region" class="search-history search-history-container hidden" hidden>
+          <section role="region" id="recents" class="search-history search-history-container hidden" hidden>
             <span role="heading" class="section-header">Recently Searched</span>
             <br>
             <br>
@@ -52,17 +83,17 @@
             <br>
           </section>
 
-          <section role="region" class="lyrics container" hidden>
+          <section role="region" id="lyrics" class="lyrics container" hidden>
           </section>
 
-          <section role="region" class="wiki container hidden" hidden>
+          <section role="region" id="wiki" class="wiki container hidden" hidden>
           </section>
 
         </div>
 
         <div class="col-6">
 
-          <section role="region" class="youtube container hidden" hidden>
+          <section role="region" id="video" class="youtube container hidden" hidden>
           </section>
 
         </div>
