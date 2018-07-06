@@ -62,7 +62,11 @@ a:hover {
 }
 
 .site-logo {
-  width: 100%;
+  width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 10px;
 }
 
 .landing-header {
