@@ -269,39 +269,6 @@ function displayLinkToWikipediaPage(data) {
   `);
 }
 
-/* DISCOVERED (THROUGH SIMILAR ARTISTS) HISTORY FUNCTIONALITY */
-function preventDiscoveredHistoryOverflow() {
-  similarArtistsSearchCounter++;
-  if (similarArtistsSearchCounter > 5) {
-    $('.similar-artists-history').find('.similar-artists-history-entry:first').remove();
-  }
-}
-
-function addDiscoveredHistoryEntry(artistQuery) {
-  $('.similar-artists-history').append(`
-    <div class="similar-artists-history-entry">
-      <span class="similar-artists-history-artist"><b>${artistQuery}</b></span><br>
-      <img src="./images/search-logo.png" class="similar-search-logo">
-    </div>
-    `);
-}
-
-function unhideDiscoveredHistoryContainer() {
-  $('.similar-artists-history-container').prop('hidden', false);
-}
-
-function handleSearchUsingDiscoveredHistory() {
-  $('.similar-artists-history').on('click', '.similar-search-logo', event => {
-      const artistQuery = $(event.currentTarget).closest('div').find('.similar-artists-history-artist').text();
-      clearInputFields();
-      clearAndHideResultsContainers();
-      getYoutubeData(artistQuery, displayYoutubeResults);
-      getWikipediaSearchData(artistQuery, useWikipediaSearchDataToFindWikiPage);
-      getSongkickArtistID(artistQuery, getSongkickArtistDetails);
-      unhideContainers();
-  });
-}
-
 /* NAVBAR FUNCTIONS */
 function showMobileNav() {
   $('.main-container').on('click', '.mobile-navbar', () => {
@@ -361,5 +328,4 @@ function handleNavbarFunctions() {
 /* EXECUTE ALL FUNCTION CALLS */
 handleSearchForm();
 handleSearchUsingSearchHistory();
-handleSearchUsingDiscoveredHistory();
 handleNavbarFunctions();
